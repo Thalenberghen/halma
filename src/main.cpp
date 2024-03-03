@@ -16,14 +16,11 @@
 #include "GL/gl.h"
 #include "GL/glu.h"
 
-#include <Eigen/Dense>
-
 #include "data_structures/memory_arena.h"
 
 #include "assets.h"
 #include "render.h"
 #include "mesh.h"
-#include "ui.h"
 
 #undef main
 
@@ -31,7 +28,6 @@
 #include "assets.cpp"
 #include "mesh.cpp"
 #include "render.cpp"
-#include "ui.cpp"
 
 #include "imgui_draw.cpp"
 #include "imgui_widgets.cpp"
@@ -42,8 +38,6 @@
 #include "imgui_impl_sdl.cpp"
 
 #include "GL/gl3w.c"
-
-using namespace Eigen;
 
 int main(int argc, char *argv[])
 {
@@ -96,7 +90,7 @@ int main(int argc, char *argv[])
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_MULTISAMPLE);
-    glDisable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
     glEnable(GL_FRAMEBUFFER_SRGB);
 
@@ -180,21 +174,21 @@ int main(int argc, char *argv[])
             }
         }
 
+        // Game logic
+        {
+            update_entity_group(&entityGroup, &frameArena);
+        }
+
         // Start Dear ImGui frame
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL2_NewFrame(window);
         ImGui::NewFrame();
 
-        Matrix<float, 3, 3> A;
-        A.setZero();
-        printf("Test %f %f\n", A(0, 2), A(1, 1));
-
-        update_entity_group(&entityGroup, &frameArena);
-
         // Render
         {
             ImGui::Render();
             glViewport(0, 0, width, height);
+            camera.aspectRatio = float(width)/float(height);
             glClearColor(0.6f, 0.6f, 0.8f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

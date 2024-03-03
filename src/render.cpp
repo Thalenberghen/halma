@@ -70,11 +70,11 @@ mat4 translated_and_scaled(vec3 position, vec3 scale)
 // Camera
 void init_camera(Camera *camera)
 {
-    camera->clipDist = vec2(0.1f, 50.0f);
+    camera->clipDist = vec2(0.1f, 5.0f);
     camera->lookAt = vec3(0, 0, 0);
-    camera->position = vec3(0, 0, 10);
+    camera->position = vec3(0, 0, 5);
     camera->up = vec3(0, 1, 0);
-    camera->size = 5.0f;
+    camera->size = 2.0f;
     camera->aspectRatio = 16.0f/9.0f;
 }
 

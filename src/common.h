@@ -92,6 +92,30 @@ struct IndexedFloat
     float data;
 };
 
+
+struct UvCoordinates
+{
+    ImVec2 min;
+    ImVec2 max;
+};
+
+// UI
+ImVec4 srgb_to_imvec_color_3(glm::ivec3 rgb);
+ImVec4 srgb_to_imvec_color_4(glm::ivec4 rgb);
+ImVec4 linear_to_imvec_color_3(glm::vec3 linear);
+ImVec4 linear_to_imvec_color_4(glm::vec4 linear);
+
+// Input
+struct InputState
+{
+    glm::ivec2 mousePos;
+    int mouseState;
+    const Uint8* keyboardState;
+    int lastKeyPressed;
+};
+
+void init_input_state(InputState *inputState);
+void update_input_state(InputState *inputState);
 int indexed_float_compare(const void *float1, const void *float2);
 
 #endif //COMMON_H
